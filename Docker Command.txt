@@ -1,0 +1,152 @@
+docker pull nginx //nginx isimli imageyi çeker(pull)
+docker images //hali hazırda var olan imageleri gösterir
+docker run nginx:latest //nginx isimli imageyi çalıştırdık
+docker container ls //çalışan containerleri listeler
+docker run -d nginx:latest //nginx isimli imageyi detached mode de çalıştırdık
+docker ps //docker üzerinde çalışan processler tablosunu verir
+docker run -d -p 8080:80 nginx:latest //nginx isimli imageyi detached mode de ve port numarası vererek çalıştırdık
+docker run -d -p 3000:80 nginx:latest //nginx isimli imageyi detached mode de ve port numarası vererek çalıştırdık
+docker run -d -p 3000:80 -p 4000:80 nginx:latest //nginx isimli imageyi detached mode de ve 2 tane port numarası vererek çalıştırdık
+docker stop priceless_fermi //isme göre stoplama
+docker ps --help // processler hakkında bilgi verir.
+docker ps -a //processin kaç zamanlık olduğunu verir.
+docker rm a2871a8cf679 //ilgili container id li containeri siler.
+docker ps -aq //processlerin sadece id'lerini verir.
+docker rm $(docker ps -aq) //alt sorgudan gelen processlerin hepsini durdur.
+docker rm -f $(docker ps -aq) //alt sorgudan gelen processlerin çalışıyor olanlarınında hepsini durdur. (-f force yani zorla)
+docker run --name website -d -p 3000:80 -p 4000:80 nginx:latest //nginx isimli imageyi detached mode de ve 2 tane port numarası ve isim vererek çalıştırdık
+docker start website
+docker stop website
+docker image list --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}" //imageleri formatlı listeler.
+export FORMAT="table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}" //FORMATI DIŞARI EXPORT ETTİK.
+docker image list --format=$FORMAT //dışa aktarılmış formatı verir.
+docker run --name website -d -p 8080:80 nginx //çalıştırdık.
+docker run --name website -v $(pwd):/usr/share/nginx/html:ro -d -p 8080:80 nginx //website klasörünün içindeki html dosyalarını docker'ın nginx isimli imagesinin içine kopyaladık ve o şekilde read only şeklinde çalıştırdık.
+docker exec -it website bash //website isimli container'in içindeki komut satırına eriştik.
+shell > ls -la
+shell > cd /usr/share/nginx/html //hacı burası o index.html'nin olduğu yer.!
+shell > exit //shell'den küt diye çıktık.!
+docker rm -f website //güçlü silme
+docker run --name website -v $(pwd):/usr/share/nginx/html -d -p 8080:80 nginx //website klasörünün içindeki html dosyalarını docker'ın nginx isimli imagesinin içine kopyaladık ve o şekilde yazılabilir modda çalıştırdık.
+docker run --help //run komutu hakkında yardım aldık.!
+docker run --name website-copy --volumes-from website -d -p 8080:81 nginx //volumu yani klasörü kopyaladık ve çalıştırdık.
+docker image ls //imageyi listeledik
+docker build --help //inşa etme(derleme) hakkında bilgi verir. Yardım verir daha doğrusu.
+docker build --tag website:latest . //bulunduğumuz klasöre etiket gibi bir şey ekler.
+docker image ls //imageleri listeler.
+docker rm -f website //web site isimli containeri siler.
+docker ps -a //processleri gösterir
+docker image ls
+docker run --name website -p 8080:80 -d website:latest //detach modda çalıştırıyor website isimli imageyi.
+node --version //node kurulumu kontrol amaçlı.
+npm init //node.js node package manager'i hazırlar init yapar.
+//enter bas x 5 gibi
+npm install //node package manager'i kur
+npm install --save express //express js'i kurar
+docker build -t user-service-api:latest . //bulunduğumuz klasörün üçindeki "Dockerfile"'ı kullanarak projeyi inşa eder(derler)
+-----------------------------
+docker image ls //image listesini verir.
+docker run --name user-api -d -p 3000:3000 user-service-api:latest //3000 portu üzerinde user-api 
+npm i //node package manager install demiş olduk
+docker image ls
+docker build -t user-service-api:latest . //bulunduğumuz klasörü node.js isimli(tagli(etiketli)) imagede çalıştırır.
+npm i -S react webpack gulp grant //react webpack'ı kurar
+docker build -t user-service-api:latest . //tekrar yaz enter
+docker build -t user-service-api:latest ./
+docker pull node:lts-alpine //tam bilemiyorum ama linux alphine diye bir image var. node ile onu çekiyor olabilir.
+docker image ls //imageleri listele
+docker pull nginx:alpine //tam bilemiyorum ama linux alphine diye bir image var. nginx ile onu çekiyor olabilir. bu var ya bu düşük MB'li(21.1 MB)
+docker image rm [buraya hash yazacan.! ilgili image'yi silecen.!]
+docker pull node:alpine //node:alpine'yi çek getir.!
+docker build -t user-service-api:latest . //bulunduğumuz klasörü node.js isimli(tagli(etiketli)) imagede çalıştırır.
+
+
+---etiketleme ve versiyonlama bölümü
+cd ../website //website isimli klasöre git.!
+docker build -t website:latest . //projeyi inşa eder.!
+docker image ls //imageleri listele website isimli image'yi gör.!
+docker build -t website:latest . //projeyi inşa eder.!
+docker build -t user-service-api:latest . //user-service-api'ı inşa eder.!
+docker run --name user-api -d -p 3000:3000 user-service-api:latest //projemizi user-api ismiyle çalıştırır. dockerfile isimli dosyanın konfigurasyonu ile hemde.!
+docker rm -f user-api //force siler.! çalışan şey normalde silinmez. durdurup öyle siler atar gider.!
+docker rm -f website
+docker ps
+docker build -t website:latest //website isimli projeyi ayağa kaldırır. ama none tag'ı ile!
+docker image ls //imageleri listeler.!
+docker tag huseyincode-website:latest huseyincode-website:1 //image'yi 1. versiyon tag yaptık gibi bir durum.!
+docker build -t huseyincode-website:latest . //image'yi inşa ettik.!
+docker tag huseyincode-website:latest huseyincode-website:2 //image'yi 1. versiyon tag yaptık gibi bir durum.!
+docker rm -f user-api //force delete user-api isimli container'i siler atar.!
+docker run --name huseyincode-latest -p 8080:80 huseyincode-website:latest //latest sürümünü çalıştırır.
+docker run --name huseyincode-2 -p 8081:80 huseyincode-website:2 //2. sürümünü çalıştırır.
+
+---Docker Registries
+1-) hub.docker.com bu adrese git. Burada Repositories diye bir tane menü var oraya bas.
+2-) +Create Repository isimli butana bas ve repo oluştur.!
+docker image ls //imageleri listeledik, baktık.!
+docker tag huseyincode-website:1 huseyincode/website:1 //etiket verdik gibi bir şey oldu.! push'lamak için hub'a göndermek için böyle bir etiket oluşturduk. Örn: huseyincode/website:1 gibi.
+docker tag huseyincode-website:2 huseyincode/website:2
+docker tag huseyincode-website:latest huseyincode/website:latest
+3-) Docker logout yap Docker desktoptan.!
+docker login
+username : falanuser
+pass : falanpass
+docker push huseyincode/website:1 //ilgili etiketteki imageyi push ile hub'a gönder.! itekle pushtla.!
+docker push huseyincode/website:latest //ilgili etiketteki imageyi push ile hub'a gönder.! itekle pushtla.!
+4-) docker hub'da huseyincode diye artırsan bulursun kendi imageni.!
+docker rmi huseyincode/website:1 galiba etiketi siliyor.!
+docker rmi huseyincode/website:2
+docker rmi huseyincode/website:latest galiba etiketi siliyor.! galiba etiketi siliyor.!
+docker pull huseyincode/website //hub'a attığımız imageyi çeker getirir localimize.! Varsayılan olarak lastest sürümünü çeker getirir.!
+docker run --name website -p 9001:80 -d huseyincode/website //ilgili container'i çalıştırır.!
+docker ps --format=$FORMAT //process'leri formatlı bir şekilde göstermemize yarar.!
+docker inspect [process id hash'i gelecek buraya] //inspect ne demek onu bilmiyorum.! Galiba çalışan ilgili process'in ayrıntılı dökümünü veriyor. Bilgi veriyor.!
+docker ps --format=$FORMAT //process'leri formatlı bir şekilde göstermemize yarar.!
+docker logs [ilgili process'in ID hash'ini yaz buraya] //bu komut process'in log'larını veriyor. hangi portta çalıştığını falan veriyor. Bilgi amaçlı.!
+docker logs -f [ilgili process'in ID hash'ini yaz buraya]
+docker logs --help //loglar hkknda bilgi ve yardım verir.!
+docker inspect [process id hash yaz] //ilgili process'in ayrıntılarını verir.! Bilgi amaçlı.!
+docker exec --help //yardım bilgisi verir.!
+docker exec -it
+docker ps --format=$FORMAT
+docker exec -it [process id has'i yaz] /bin/bash //ilgili process'in komut satırına yani terminale shell alırsın.!
+docker inspect [process id hash yaz] //bilgiyi al CMD varmı o bilgilerin içinde ona bak.
+docker exec -it [process id has'i yaz] /bin/sh //shell'i aldık.!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//burası ayrı Telusko(Navin Reddy)
+docker image ls
+docker image pull ubuntu:latest //ubuntu'nun imagesini indirdik çektik
+docker image ls
+docker run it [burası ubuntu imagesinin hash kodu] /bin/bash
+> uname -a
+> whoami
+> ping google.com
+> apt-get update //ubuntunun paketlerini günceller
+> apt-get install iputils-ping //ping ile ilgili bir paketi(kütüphaneyi kurar)
+> ping google.com
+
+
