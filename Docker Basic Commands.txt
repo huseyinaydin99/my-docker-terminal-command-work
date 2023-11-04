@@ -1,0 +1,21 @@
+docker version
+docker pull rabbitmq:latest //rabbitmq'nun son version image'sini indirir.
+docker pull rabbitmq:management
+docker image ls //tüm imageleri listeler.
+docker run -d --name my_davsan --hostname my_davsan -p 5672:5672 rabbitmq:latest //bu rabbitmq:latest yani son version rabbitmq imagesinden yeni bir tane container oluşturur ve çalıştırır(run).
+docker container ls //çalışan yani ayakta olan containerlerin listesini verir.
+docker container ls -a //çalışan yahut çalışmayan containerlerin listesini verir.
+docker ps //çalışan processleri gösterir.
+docker container stop my_davsan //my_davsan isimli çalışan rabbitmq containerini durdurur.
+docker ps -a //çalışan processlerin hepsini -a(ALAYINI[ALL]) gösterir.
+docker container start my_davsan //my_davsan isimli containeri başlatır.
+docker exec -i -t my_davsan /bin/bash //ilgili container'in içindeki /bin/bash isimli klasörün içinden shell alır yani komut satırını alır. Shell kelime anlamı olarak kabuk demektir. Kabuktan kasıt işletim sisteminin ya grafik arayüzü yahutta komut satırıdır. Grafik arayüz veya komut satırı işletim sisteminin kernel'ine yani çekirdeğine komut vermemize olanak sağlar. Kernel(işletim sisteminin çekirdeği) donanım üzerinde kodlar çalıştırmamıza yarar. Bu komut sayesinde my_davsan isili container'imizin komut satırına ulaşmış ve onu komuta etmiş oluruz. 
+# rabbitmqctl stop_app //rabbitmq containerinin üzerinde komut çalıştırıyoruz. Bu komut ise container üzerinde ayakta olan rabbitmq servisini durdurmamıza yarıyor.
+# rabbitmqctl start_app //rabbitmq containerinin üzerinde komut çalıştırıyoruz. Bu komut ise container üzerinde ayakta olmayan rabbitmq servisini başlatmamıza yarıyor.
+# exit //komut satırından çıkar tabi containerin.
+C:\Users\User1> exit //cmd'den çıkar.
+docker container stop my_davsan
+docker ps -a //çalışan çalışmayan tüm processleri verir geçmişte çalışıp vefat etmiş olanlarıda.
+docker container rm containerin_process_id_giriver //ilgili id'li containeri siler. rm remove yani sil yahut kaldır demektir.
+docker image ls //tüm imageleri listeler.
+docker image rm 336cb992af03
