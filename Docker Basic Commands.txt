@@ -19,3 +19,19 @@ docker ps -a //çalışan çalışmayan tüm processleri verir geçmişte çalı
 docker container rm containerin_process_id_giriver //ilgili id'li containeri siler. rm remove yani sil yahut kaldır demektir.
 docker image ls //tüm imageleri listeler.
 docker image rm 336cb992af03
+
+================|
+RabbitMQ Cluster|
+================|
+docker run -d --hostname rabbit_node1 --name rabbit_node1 -e RABBITMQ_ERLANG_COOKIE='rabbitcluster' -p 5672:5672 -p 15672:15672 rabbitmq:management
+
+docker run -d --hostname rabbit_node2 --name rabbit_node2 --link rabbit_node1:rabbit_node1 -e RABBITMQ_ERLANG_COOKIE='rabbitcluster' -p 3000:5672 -p 3001:15672 rabbitmq:management
+
+docker ps //çalışan tüm processleri verir.
+docker exec -i -t rabbit_node2 /bin/bash //node2'nin komut satırına erişir.
+rabbitmqctl stop_app //rabbitmq container'inin içinde çalışan rabbitmq servisini durdurur.
+rabbitmqctl join_cluster rabbit@rabbit_node1 //node2'yi node1 ile joinler yani bağlar iletişimini sağlar.
+rabbitmqctl start_app //rabbitmq container'inin rabbitmq servisini başlatır.
+docker exec -i -t rabbit_node2
+rabbitmqctl stop_app
+rabbitmqctl start_app
